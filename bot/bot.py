@@ -6,7 +6,7 @@ from scrape_func import chrome_setup
 from functions import movie_embed, process_ratings
 
 client = commands.Bot(command_prefix="!")
-TOKEN = "Nzk0NTM2MzgwNjcwOTM1MDYw.X-8Pqg.B2ovZYHgPgmyxneA8YPU3E3gJT0"
+TOKEN = "Nzk0NTM2MzgwNjcwOTM1MDYw.X-8Pqg.7j4MLqUCrFSYRfTBVhXItwIBG7o"
 driver = chrome_setup()
 
 @client.event
