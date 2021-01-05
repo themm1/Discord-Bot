@@ -1,26 +1,7 @@
 import discord
 from discord.ext import commands
-import random
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+from movie_scraper import MovieRating
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
-from scraper import Movie, MovieRating
-
-# chrome setup (open chrome, accept cookies)
-def chrome_setup():
-    options = webdriver.ChromeOptions()
-    options.add_experimental_option("excludeSwitches", ["enable-logging"])
-    options.add_argument("headless")
-    driver = webdriver.Chrome(executable_path="C:\Programming Modules\Drivers\chromedriver.exe", options=options)
-    driver.get("https://www.google.com/")
-    try:
-        WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME,"agree"))).click()
-    except:
-        pass
-    return driver
 
 def movie_embed(movie, imdb, rt, metacritic):
     embed = discord.Embed(title=movie.title, description=f"{movie.summary}\n\nMore information [here]({movie.url})", color=0xFF0000)

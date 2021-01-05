@@ -1,43 +1,8 @@
-import sys
-from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from scrape_func import get_numbers, edit_string, element
 
-def element(driver, by_x, html_element):
-    try:
-        element = WebDriverWait(driver, 1).until(
-            EC.presence_of_element_located((by_x, html_element))
-        )
-        return element
-    except:
-        return "Element not found"
-
-def get_numbers(string):
-    numbers_list = [string[i] for i in range(len(string)) if string[i].isnumeric()]
-    number = "".join(numbers_list)
-    return number
-
-def edit_string(string, chars):
-    try:
-        string = string.replace(chars, "")
-    except:
-        string = string
-    return string
-    
-def chrome_setup():
-    options = webdriver.ChromeOptions()
-    options.add_experimental_option("excludeSwitches", ["enable-logging"])
-    options.add_argument("headless")
-    driver = webdriver.Chrome(executable_path="C:\Programming Modules\Drivers\chromedriver.exe", options=options)
-    driver.get("https://search.yahoo.com/")
-    try:
-        WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME,"agree"))).click()
-    except:
-        pass
-    return driver
-
+# movie information class
 class Movie:
     def __init__(self, title, time, genre, summary, director, cast, url, img):
         self.title = title
@@ -49,18 +14,21 @@ class Movie:
         self.url = url
         self.img = img
 
+# movie rating class
 class MovieRating:
     def __init__(self, platform, rating, rater):
         self.platform = platform
         self.rating = rating
         self.rater = rater
 
-class movieRatingScraper: 
+# class for scraping information from Yahoo and IMDb
+class Scraper: 
     def __init__(self, driver, film):
         self.driver = driver
         self.film = film
-        driver.get(f"https://search.yahoo.com/search?p=imdb/{self.film}")
+        driver.get(f"https://search.yahoo.com/search?p=imdb+{self.film}")
 
+    # get basic information about movie and create object from Movie class
     def info(self):
         imdb_shortcut_1 = "//*[@id='title-overview-widget']/div[1]/div[2]/div/div[2]/div[2]/"
         imdb_shortcut_2 = "//*[@id='title-overview-widget']/div[2]/div[1]/"
@@ -92,6 +60,7 @@ class movieRatingScraper:
         img = img.get_attribute("src")
         return Movie(title.text, time.text, genre.text, summary, director, cast, self.driver.current_url, img)
 
+    # get rating
     def rating(self, by_x, html_element):
         try:
             data = element(self.driver, by_x, html_element)

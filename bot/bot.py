@@ -1,8 +1,9 @@
+import random
 import discord
 from discord.ext import commands
-import random
-from scraper import Scraper
-from functions import movie_embed, process_ratings, chrome_setup
+from movie_scraper import Scraper
+from scrape_func import chrome_setup
+from functions import movie_embed, process_ratings
 
 client = commands.Bot(command_prefix="!")
 TOKEN = "Nzk0NTM2MzgwNjcwOTM1MDYw.X-8Pqg.B2ovZYHgPgmyxneA8YPU3E3gJT0"
@@ -39,11 +40,9 @@ async def _8ball(ctx, *, question):
 
 @client.command(aliases=["movie", "film"])
 async def movieScraper(ctx, *, film):
-    try:
-        movie = Scraper(driver, film)
-        movie_embed = process_ratings(movie)
-        await ctx.send(embed=movie_embed)
-    except:
-        await ctx.send("Sorry, we couldn't find the movie")
+    movie = Scraper(driver, film)
+    movie_embed = process_ratings(movie)
+    await ctx.send(embed=movie_embed)
+    #await ctx.send("Sorry, we couldn't find the movie")
 
 client.run(TOKEN)
