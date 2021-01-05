@@ -40,9 +40,11 @@ async def _8ball(ctx, *, question):
 
 @client.command(aliases=["movie", "film"])
 async def movieScraper(ctx, *, film):
-    movie = Scraper(driver, film)
-    movie_embed = process_ratings(movie)
-    await ctx.send(embed=movie_embed)
-    #await ctx.send("Sorry, we couldn't find the movie")
+    try:
+        movie = Scraper(driver, film)
+        movie_embed = process_ratings(movie)
+        await ctx.send(embed=movie_embed)
+    except:
+        await ctx.send("Sorry, we couldn't find the movie")
 
 client.run(TOKEN)
