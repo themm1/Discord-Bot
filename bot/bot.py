@@ -1,12 +1,12 @@
 import random
 import discord
+from token import TOKEN
 from discord.ext import commands
 from movie_scraper import Scraper
 from scrape_func import chrome_setup
 from functions import movie_embed, process_ratings
 
 client = commands.Bot(command_prefix="!")
-TOKEN = "Nzk0NTM2MzgwNjcwOTM1MDYw.X-8Pqg.sWLy2fnOOBHJ7I1EQyxk-Vgy_Zw"
 driver = chrome_setup()
 
 @client.event
