@@ -9,7 +9,7 @@ def chrome_setup():
     options = webdriver.ChromeOptions()
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
     options.add_argument("headless")
-    driver = webdriver.Chrome(executable_path="./drivers/chromedriver.exe", options=options)
+    driver = webdriver.Chrome(executable_path="C:\Programming Modules\Drivers\chromedriver.exe", options=options)
     driver.get("https://www.yahoo.com/")
     try:
         WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.NAME,"agree"))).click()
