@@ -1,6 +1,6 @@
 import random
 import discord
-from token import TOKEN
+from discord_token import TOKEN
 from discord.ext import commands
 from movie_scraper import Scraper
 from scrape_func import chrome_setup
