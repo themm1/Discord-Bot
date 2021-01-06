@@ -1,3 +1,2 @@
-https://github.com/heroku/heroku-buildpack-chromedriver
 git+https://github.com/themm1/Discord-Bot
 selenium
