@@ -4,7 +4,7 @@
 This discord bot is usefull for scraping information about movies.
 Bot returns information in an embed message.
 
-[Invitation] (https://discord.com/api/oauth2/authorize?client_id=794536380670935060&permissions=0&scope=bot)
+[Invitation](https://discord.com/api/oauth2/authorize?client_id=794536380670935060&permissions=0&scope=bot)
 
 ## Commands
 | Commands                      | Message                                              | Respond time      |
