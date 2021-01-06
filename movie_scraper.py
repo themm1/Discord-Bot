@@ -1,6 +1,6 @@
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from scrape_func import get_numbers, edit_string, element
+from scraping_functions import get_numbers, edit_string, element
 
 # movie information class
 class Movie:
@@ -64,8 +64,7 @@ class Scraper:
     def rating(self, by_x, html_element):
         try:
             data = element(self.driver, by_x, html_element)
-            numbers_list = [data.text[i] for i in range(len(data.text)) if data.text[i].isnumeric()]
-            number = "".join(numbers_list)
+            number = get_numbers(data)
             return number
         except:
             return "Rating unavailable"

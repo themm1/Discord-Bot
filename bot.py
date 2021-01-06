@@ -3,7 +3,7 @@ import discord
 from discord_token import TOKEN
 from discord.ext import commands
 from movie_scraper import Scraper
-from scrape_func import chrome_setup
+from scraping_functions import chrome_setup
 from functions import movie_embed, process_ratings
 
 client = commands.Bot(command_prefix="!")
