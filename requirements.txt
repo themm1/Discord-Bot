@@ -1,2 +1,2 @@
-https://elements.heroku.com/buildpacks/rapptz/discord.py
+-U discord.py
 selenium
