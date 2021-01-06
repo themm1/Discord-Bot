@@ -1,0 +1,3 @@
+https://github.com/heroku/heroku-buildpack-google-chrome
+git+https://github.com/themm1/Discord-Bot
+selenium
