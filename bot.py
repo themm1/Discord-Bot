@@ -3,7 +3,6 @@ import random
 import discord
 from discord.ext import commands
 from sys import platform
-from bot_token import TOKEN
 from movie_scraper import Scraper
 from scrape_func import chrome_setup, chrome_setup_win
 from functions import movie_embed, process_ratings
@@ -11,6 +10,7 @@ from functions import movie_embed, process_ratings
 # check OS
 if platform == "win32":
     HEROKU = False
+    from bot_token import TOKEN
 else:
     HEROKU = True
 
