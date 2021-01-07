@@ -1,13 +1,18 @@
+import os
 import random
 import discord
-from discord_token import TOKEN
 from discord.ext import commands
+from discord_token import TOKEN
 from movie_scraper import Scraper
-from scrape_func import chrome_setup
+from scrape_func import chrome_setup, chrome_setup_win
 from functions import movie_embed, process_ratings
 
 client = commands.Bot(command_prefix="!")
-driver = chrome_setup()
+try:
+    driver = chrome_setup()
+except:
+    print("Chrome Windows")
+    driver = chrome_setup_win()
 
 @client.event
 async def on_ready():
@@ -47,4 +52,7 @@ async def movieScraper(ctx, *, film):
     except:
         await ctx.send("Sorry, we couldn't find the movie")
 
-client.run(TOKEN)
+try:
+    client.run("BOT_TOKEN")
+except:
+    client.run(TOKEN)
