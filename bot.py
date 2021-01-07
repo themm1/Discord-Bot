@@ -59,6 +59,6 @@ async def movieScraper(ctx, *, film):
         await ctx.send("Sorry, we couldn't find the movie")
 
 if HEROKU:
-    client.run("BOT_TOKEN")
+    client.run(os.environ["BOT_TOKEN"])
 else:
     client.run(TOKEN)
