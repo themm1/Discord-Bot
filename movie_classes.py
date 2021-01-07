@@ -14,6 +14,16 @@ class Movie:
         self.url = url
         self.img = img
 
+class WotPlayer:
+    def __init__(self, name, clan, battles, winrate, wn8):
+        self.name = name
+        self.clan = clan
+        self.battles = battles
+        self.winrate = winrate
+        self.wn8 = wn8
+        self.wotlife = f"https://sk.wot-life.com/eu/player/{self.name}/"
+        self.labvole = f"https://lab-vole.cz/Player?name={self.name}"
+
 # movie rating class
 class MovieRating:
     def __init__(self, platform, rating, rater):
@@ -23,10 +33,10 @@ class MovieRating:
 
 # class for scraping information from Yahoo and IMDb
 class Scraper: 
-    def __init__(self, driver, film):
+    def __init__(self, driver, user_input, site):
         self.driver = driver
-        self.film = film
-        driver.get(f"https://search.yahoo.com/search?p=imdb+{self.film}")
+        self.user_input = user_input
+        driver.get(site)
 
     # get basic information about movie and create object from Movie class
     def info(self):
@@ -67,6 +77,9 @@ class Scraper:
             return get_numbers(data.text)
         except:
             return "Rating unavailable"
+
+    def get_element(self, html_element):
+        return self.driver.find_element_by_xpath(html_element).text
 
     def get_current_url(self):
         return self.driver.current_url

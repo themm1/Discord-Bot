@@ -1,7 +1,20 @@
 import discord
 from discord.ext import commands
-from movie_classes import MovieRating
+from movie_classes import MovieRating, WotPlayer
 from selenium.webdriver.common.by import By
+
+def wot_info(wot):
+    battles = {}; winrate = {}; wn8 = {}
+    name = wot.get_element("/html/body/div[4]/div/div/div/h3")
+    clan = wot.get_element("/html/body/div[4]/div/div/div/p/b/font/a[1]")
+    for i in range(1, 5):
+        battles[i] = wot.get_element(f"//*[@id='random']/table/tbody/tr[2]/td[{i}]")
+        winrate[i] = wot.get_element(f"//*[@id='random']/table/tbody/tr[4]/td[{i}]")
+        wn8[i] = wot.get_element(f"//*[@id='random']/table/tbody/tr[9]/td[{i}]")
+    wot.close()
+    if clan == "[]":
+        clan = "Without clan"
+    return WotPlayer(name, clan, battles, winrate, wn8)
 
 def movie_embed(movie, imdb, rt, metacritic):
     embed = discord.Embed(title=movie.title, description=f"{movie.summary}\n\nMore information [here]({movie.url})", color=0xFF0000)
