@@ -2,16 +2,22 @@ import os
 import random
 import discord
 from discord.ext import commands
+from sys import platform
 from bot_token import TOKEN
 from movie_scraper import Scraper
 from scrape_func import chrome_setup, chrome_setup_win
 from functions import movie_embed, process_ratings
 
+# check OS
+if platform == "win32":
+    HEROKU = False
+else:
+    HEROKU = True
+
 client = commands.Bot(command_prefix="!")
-try:
+if HEROKU:
     driver = chrome_setup()
-except:
-    print("Chrome Windows")
+else:
     driver = chrome_setup_win()
 
 @client.event
@@ -52,7 +58,7 @@ async def movieScraper(ctx, *, film):
     except:
         await ctx.send("Sorry, we couldn't find the movie")
 
-try:
+if HEROKU:
     client.run("BOT_TOKEN")
-except:
+else:
     client.run(TOKEN)
