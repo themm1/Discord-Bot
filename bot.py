@@ -10,7 +10,7 @@ from functions import movie_embed, process_ratings
 # check OS
 if platform == "win32":
     HEROKU = False
-    from bot_token import TOKEN
+    from discord_token import TOKEN
 else:
     HEROKU = True
 
