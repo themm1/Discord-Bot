@@ -1,6 +1,6 @@
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from scrape_func import get_numbers, edit_string, element
+from scraping_functions import get_numbers, edit_string, element
 
 # movie information class
 class Movie:

@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from movie_scraper import MovieRating
+from movie_classes import MovieRating
 from selenium.webdriver.common.by import By
 
 def movie_embed(movie, imdb, rt, metacritic):

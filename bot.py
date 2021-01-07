@@ -3,8 +3,8 @@ import random
 import discord
 from discord.ext import commands
 from sys import platform
-from movie_scraper import Scraper
-from scrape_func import chrome_setup, chrome_setup_win
+from movie_classes import Scraper
+from scraping_functions import chrome_setup, chrome_setup_win
 from functions import movie_embed, process_ratings
 
 # check OS
