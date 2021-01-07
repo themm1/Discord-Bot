@@ -64,8 +64,7 @@ class Scraper:
     def rating(self, by_x, html_element):
         try:
             data = element(self.driver, by_x, html_element)
-            number = get_numbers(data)
-            return number
+            return get_numbers(data.text)
         except:
             return "Rating unavailable"
 
