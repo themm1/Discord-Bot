@@ -2,7 +2,7 @@ import os
 import random
 import discord
 from discord.ext import commands
-from discord_token import TOKEN
+from bot_token import TOKEN
 from movie_scraper import Scraper
 from scrape_func import chrome_setup, chrome_setup_win
 from functions import movie_embed, process_ratings
