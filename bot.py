@@ -38,10 +38,9 @@ async def movieScraper(ctx, *, film):
 @client.command()
 async def wot(ctx, *, player):
     wot = Scraper(driver, player, f"https://lab-vole.cz/Player?name={player}")
-    player = wot_info(wot)
-    for stat in player.name, player.clan, player.battles, player.winrate, player.wn8, player.wotlife, player.labvole:
-        await ctx.send(stat)
-
+    wot_embed = wot_info(wot)
+    await ctx.send(embed=wot_embed)
+    
 @client.command(aliases=["rn", "randomnumber"])
 async def random_number(ctx, max_nubmer):
     try:

@@ -22,7 +22,7 @@ class WotPlayer:
         self.winrate = winrate
         self.wn8 = wn8
         self.wotlife = f"https://sk.wot-life.com/eu/player/{self.name}/"
-        self.labvole = f"https://lab-vole.cz/Player?name={self.name}"
+        self.wotcharts = f"https://wotcharts.eu/Player?name={self.name}"
 
 # movie rating class
 class MovieRating:
