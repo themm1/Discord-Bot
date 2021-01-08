@@ -20,7 +20,7 @@ def chrome_setup():
 # chrome setup for windows
 def chrome_setup_win():
     options = webdriver.ChromeOptions()
-    options.add_argument("headless")
+    # options.add_argument("headless")
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
     driver = webdriver.Chrome(executable_path="C:\Programming Modules\Drivers\chromedriver.exe", options=options)
     accept_yahoo_cookies(driver)

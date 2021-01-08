@@ -24,7 +24,6 @@ def wot_info(wot):
         battles.append(wot.get_element(f"//*[@id='random']/table/tbody/tr[2]/td[{i}]"))
         winrate.append(wot.get_element(f"//*[@id='random']/table/tbody/tr[4]/td[{i}]"))
         wn8.append(wot.get_element(f"//*[@id='random']/table/tbody/tr[9]/td[{i}]"))
-    wot.close()
     if clan == "[]":
         clan = "Without clan"
     player = WotPlayer(name, clan, battles, winrate, wn8)
