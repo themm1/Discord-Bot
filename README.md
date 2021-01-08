@@ -10,5 +10,5 @@ Bot returns information in an embed message.
 | Commands                      | Message                                              | Respond time      |
 | ------------------------------|:----------------------------------------------------:|------------------:|
 | !rn {number}                  | generates random number in range 1 - {the number}    | 0.5s              |
-| !wot {player}                 | returns WoT player's stats                           | 5 - 10s, 6 avg    |
+| !wot {player}                 | returns WoT player's stats                           | 6s    |
 | !movie {the movie}            | returns basic info about the movie and it's ratings  | 5 - 10s, 6 avg    |

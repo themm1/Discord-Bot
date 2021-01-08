@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from movie_classes import MovieRating, WotPlayer
+from classes import MovieRating, WotPlayer
 from selenium.webdriver.common.by import By
 
 def wot_embed(player):

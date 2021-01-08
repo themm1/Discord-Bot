@@ -3,7 +3,7 @@ import random
 import discord
 from discord.ext import commands
 from sys import platform
-from movie_classes import Scraper
+from classes import Scraper
 from scraping_functions import chrome_setup, chrome_setup_win
 from functions import movie_embed, process_ratings, wot_info
 
