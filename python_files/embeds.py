@@ -17,7 +17,7 @@ def wot_embed(player):
 def movie_embed(movie, imdb, rt, metacritic):
     stream = movie.stream_movie()
     embed = discord.Embed(title=movie.title, description=f"{movie.summary}\n\nMore information: [IMDb]({movie.url})\
-        \nWhatch for free: [AZMovies]({stream}) (NOT SECURE)", color=0xFF0000)
+        \nWatch for free: [AZMovies]({stream}) (NOT SECURE)", color=0xFF0000)
     embed.set_thumbnail(url=movie.img)
     embed.add_field(name="Genre", value=movie.genre, inline=True)
     embed.add_field(name="Runtime", value=movie.time, inline=True)

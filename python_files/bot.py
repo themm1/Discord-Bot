@@ -50,8 +50,6 @@ if platform == "win32":
     from token_discord import TOKEN
     driver = chrome_setup_win()
     client.run(TOKEN)
-    HEROKU = False
 else:
     driver = chrome_setup()
     client.run(os.environ["BOT_TOKEN"])
-    HEROKU = True

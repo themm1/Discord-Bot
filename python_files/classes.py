@@ -18,6 +18,12 @@ class Movie:
         url_title = url_title[:-7].lower()
         return f"https://azm.to/movie/{url_title}"
 
+class MovieRating:
+    def __init__(self, platform, rating, rater):
+        self.platform = platform
+        self.rating = rating
+        self.rater = rater
+
 class WotPlayer:
     def __init__(self, name, clan, battles, winrate, wn8):
         self.name = name
@@ -27,12 +33,6 @@ class WotPlayer:
         self.wn8 = wn8
         self.wotlife = f"https://sk.wot-life.com/eu/player/{self.name}/"
         self.wotcharts = f"https://wotcharts.eu/Player?name={self.name}"
-
-class MovieRating:
-    def __init__(self, platform, rating, rater):
-        self.platform = platform
-        self.rating = rating
-        self.rater = rater
 
 class Scraper: 
     def __init__(self, driver, user_input, site):
