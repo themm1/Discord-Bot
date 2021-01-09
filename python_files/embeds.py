@@ -9,7 +9,7 @@ def wot_embed(player):
     embed.add_field(name="Winrate", value=p.winrate[0], inline=True)
     embed.add_field(name="WN8", value=p.wn8[0], inline=True)
     i = 0
-    for session in "Last session", "Last 7 days", "Last 30 days":
+    for session in "Last 24 hours", "Last 7 days", "Last 30 days":
         i += 1
         embed.add_field(name=session, value=f"{p.battles[i]}\n{p.winrate[i]}\n{p.wn8[i]}", inline=True)
     return embed
