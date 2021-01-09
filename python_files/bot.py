@@ -9,18 +9,14 @@ from functions import movie_embed, process_ratings, wot_info
 
 # check OS
 if platform == "win32":
-    HEROKU = False
     from token_discord import TOKEN
+    driver = chrome_setup()
+    HEROKU = False
 else:
+    driver = chrome_setup_win()
     HEROKU = True
 
 client = commands.Bot(command_prefix="!")
-
-if HEROKU:
-    driver = chrome_setup()
-else:
-    driver = chrome_setup_win()
-
 
 @client.event
 async def on_ready():
@@ -57,7 +53,7 @@ async def ping(ctx):
     latency = round(client.latency * 1000)
     await ctx.send(f"Your ping is {latency} ms")
 
-if HEROKU:
-    client.run(os.environ["BOT_TOKEN"])
-else:
+if platform == "win32":
     client.run(TOKEN)
+else:
+    client.run(os.environ["BOT_TOKEN"])
