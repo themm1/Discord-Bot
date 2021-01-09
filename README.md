@@ -10,4 +10,4 @@ This discord bot is usefull for web scraping some information from the internet,
 | ------------------------------|:----------------------------------------------------:|--------------------------:|
 | !rn {number}                  | generates random number in range 1 - {the number}    | instatnt                  |
 | !wot {player}                 | returns WoT player's stats                           | 6s                        |
-| !movie {the movie}            | returns basic info about the movie, it's ratings and where to watch it for free  | 5 - 10s, 6 avg    |
+| !movie {the movie}            | returns basic info about the movie, it's ratings and where to watch it| 5 - 10s, 6 avg    |
