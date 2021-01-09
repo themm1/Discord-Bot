@@ -33,7 +33,6 @@ def accept_yahoo_cookies(driver):
     except:
         pass
 
-# function for WebDriverWait
 def element(driver, by_x, html_element):
     try:
         element = WebDriverWait(driver, 1).until(
@@ -41,19 +40,16 @@ def element(driver, by_x, html_element):
         )
         return element
     except:
-        print("Couldn't find the element")
-        return "Element not found"
+        return False
 
-# get numbers from string
 def get_numbers(string):
     numbers_list = [string[i] for i in range(len(string)) if string[i].isnumeric()]
     number = "".join(numbers_list)
     return number
 
-# remove certain charasters from a string
-def edit_string(string, chars):
+def edit_string(string, chars, replace):
     try:
-        string = string.replace(chars, "")
+        string = string.replace(chars, replace)
     except:
         string = string
     return string

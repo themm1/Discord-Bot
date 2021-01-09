@@ -3,6 +3,7 @@ import random
 import discord
 from discord.ext import commands
 from sys import platform
+from selenium.webdriver.common.by import By
 from classes import Scraper
 from scraping_functions import chrome_setup, chrome_setup_win
 from functions import movie_embed, process_ratings, wot_info
@@ -10,10 +11,10 @@ from functions import movie_embed, process_ratings, wot_info
 # check OS
 if platform == "win32":
     from token_discord import TOKEN
-    driver = chrome_setup()
+    driver = chrome_setup_win()
     HEROKU = False
 else:
-    driver = chrome_setup_win()
+    driver = chrome_setup()
     HEROKU = True
 
 client = commands.Bot(command_prefix="!")
@@ -33,12 +34,10 @@ async def movieScraper(ctx, *, film):
 
 @client.command()
 async def wot(ctx, *, player):
-    try:
-        wot = Scraper(driver, player, f"https://lab-vole.cz/Player?name={player}")
-        wot_embed = wot_info(wot)
-        await ctx.send(embed=wot_embed)
-    except:
-        print("Couldn't find the player")
+    wot = Scraper(driver, player, f"https://lab-vole.cz/Player?name={player}")
+    wot_embed = wot_info(wot)
+    await ctx.send(embed=wot_embed)
+        #await ctx.send("Couldn't find the player")
     
 @client.command(aliases=["rn", "randomnumber"])
 async def random_number(ctx, max_nubmer):
