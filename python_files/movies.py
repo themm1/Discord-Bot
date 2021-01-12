@@ -5,7 +5,6 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from functions import get_numbers, edit_string, element
 
-
 class Movie:
     def __init__(self, title, time, genre, summary, director, cast, url, img):
         self.title = title
