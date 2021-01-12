@@ -3,10 +3,10 @@ import random
 import discord
 from discord.ext import commands
 from sys import platform
-from selenium.webdriver.common.by import By
-from classes import Scraper
-from functions import chrome_setup, chrome_setup_win
-from main_functions import main_movie, main_wot_stats
+from movies import main_movie
+from wot import main_wot_stats
+from scraper import Scraper
+from functions import chrome_setup
 
 client = commands.Bot(command_prefix="!")
 
@@ -45,11 +45,10 @@ async def ping(ctx):
     latency = round(client.latency * 1000)
     await ctx.send(f"Your ping is {latency} ms")
 
-# check OS
 if platform == "win32":
     from token_discord import TOKEN
-    driver = chrome_setup_win()
+    driver = chrome_setup(HEROKU=False)
     client.run(TOKEN)
 else:
-    driver = chrome_setup()
+    driver = chrome_setup(HEROKU=True)
     client.run(os.environ["BOT_TOKEN"])

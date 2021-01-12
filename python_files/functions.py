@@ -5,24 +5,26 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-# chrome setup - open chrome, accept cookies (for linux on Heroku servers)
-def chrome_setup():
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_experimental_option("excludeSwitches", ["enable-logging"])
-    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-    accept_yahoo_cookies(driver)
+def chrome_linux(options):
+    options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    options.add_argument("--headless")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--no-sandbox")
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=options)
     return driver
 
-# chrome setup for windows
-def chrome_setup_win():
-    options = webdriver.ChromeOptions()
+def chrome_win(options):
     # options.add_argument("headless")
-    options.add_experimental_option("excludeSwitches", ["enable-logging"])
     driver = webdriver.Chrome(executable_path="C:\Programming Modules\Drivers\chromedriver.exe", options=options)
+    return driver
+
+def chrome_setup(HEROKU):
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option("excludeSwitches", ["enable-logging"])
+    if HEROKU:
+        driver = chrome_linux(options)
+    else:
+        driver = chrome_win(options)
     accept_yahoo_cookies(driver)
     return driver
 
