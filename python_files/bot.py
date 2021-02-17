@@ -16,12 +16,9 @@ async def on_ready():
  
 @client.command(aliases=["movie", "film"])
 async def movieScraper(ctx, *, film):
-    try:
-        movie = movie_main(film)
-        embed = movie_embed(movie)
-        await ctx.send(embed=embed)
-    except:
-        await ctx.send("Sorry, we couldn't find the movie")
+    movie = movie_main(film)
+    embed = movie_embed(movie)
+    await ctx.send(embed=embed)
 
 @client.command()
 async def wot(ctx, *, player):
@@ -45,6 +42,10 @@ async def ping(ctx):
     latency = round(client.latency * 1000)
     await ctx.send(f"Your ping is {latency} ms")
 
+from token_discord import TOKEN
+driver = "f"
+client.run(TOKEN)
+'''
 if platform == "win32":
     from token_discord import TOKEN
     driver = chrome_setup(HEROKU=False)
@@ -52,3 +53,4 @@ if platform == "win32":
 else:
     driver = chrome_setup(HEROKU=True)
     client.run(os.environ["BOT_TOKEN"])
+'''

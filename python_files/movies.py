@@ -4,7 +4,7 @@ from imdb import IMDb
 from rotten_tomatoes_client import RottenTomatoesClient
 
 class movieInfo:
-    def __init__(self, title, year, plot, genres, runtime, directors, cast):
+    def __init__(self, title, year, plot, genres, runtime, directors, cast, img):
         self.title = title
         self.year = year
         self.plot = plot
@@ -12,6 +12,7 @@ class movieInfo:
         self.runtime = runtime
         self.directors = directors
         self.cast = cast
+        self.img = img
 
     def general(self):
         self.title = f"{self.title} ({self.year})"
@@ -43,7 +44,6 @@ class movieRatings:
         self.imdb = imdb
         self.rottentom = rottentom
         self.metacritic = metacritic
-        
 
     def format(self):
         self.imdb['rating'] = int(self.imdb['rating']*10)
@@ -66,21 +66,26 @@ def imdbInfo(query):
     movie["id"] = movie_id
     return movie
     
-def movieSearch(title):
-    result = RottenTomatoesClient.search(term=title, limit=5)
-    return result["movies"][0]
+def movieSearch(movie):
+    results = RottenTomatoesClient.search(term=movie['title'], limit=10)
+    for result in results['movies']:
+        print(result)
+        if result['year'] == movie['year']:
+            return result
+    else:
+        return "Unavailable"
 
 
 def movie_main(film):
     movie = imdbInfo(film)
 
     info = movieInfo(movie['title'], movie['year'], movie['plot'], movie['genres'],
-                        movie['runtime'], movie['directors'], movie['cast'])
+                        movie['runtime'], movie['directors'], movie['cast'], movie['cover url'])
     info.general()
     info.credits()
 
     imdb = {"platform": "IMDb", "rating": movie['rating'], "id": movie['id']}
-    rottentom = movieSearch(movie['title'])
+    rottentom = movieSearch(movie)
     rottentom['platform'] = "Rotten Tomatoes"
     metacritic = movie['metacritic']
     metacritic['platform'] = "Metacritic"
@@ -95,12 +100,12 @@ def movie_embed(movie):
     
     embed = discord.Embed(title=info.title, description=f"{info.plot}\n\nMore information: [IMDb]({ratings.imdb['url']})\
         \nWatch for free: AZMovies (NOT SECURE)", color=0xFF0000)
-        
-    embed.set_thumbnail(url="url")
-    embed.add_field(name="Genre", value=info.genre, inline=True)
+
+    embed.set_thumbnail(url=info.img)
+    embed.add_field(name="Genre", value=info.genres, inline=True)
     embed.add_field(name="Runtime", value=info.runtime, inline=True)
     embed.add_field(name="Credits", value=f"{info.directors}\n{info.cast}", inline=False)
 
     for site in ratings.imdb, ratings.rottentom, ratings.metacritic:
-        embed.add_field(name=site['platform'], value=site['rating'], inline=True)
+        embed.add_field(name=site['platform'], value=f"[{site['rating']}%]({site['url']})", inline=True)
     return embed
