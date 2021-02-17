@@ -49,14 +49,20 @@ class movieRatings:
         self.imdb['rating'] = int(self.imdb['rating']*10)
         self.imdb['url'] = f"https://www.imdb.com/title/tt{self.imdb['id']}"
 
-        self.rottentom['rating'] = self.rottentom['meterScore']
-        self.rottentom['url'] = f"https://www.rottentomatoes.com{self.rottentom['url']}"
-        
-        self.metacritic['rating'] = self.metacritic['metascore']
-        self.metacritic['url'] = self.metacritic['metacritic url']
+        try:
+            self.rottentom['rating'] = self.rottentom['meterScore']
+            self.rottentom['url'] = f"https://www.rottentomatoes.com{self.rottentom['url']}"
+        except:
+            pass
+
+        try:
+            self.metacritic['rating'] = self.metacritic['metascore']
+            self.metacritic['url'] = self.metacritic['metacritic url']
+        except:
+            pass
 
 
-def imdbInfo(query):
+def imdb_info(query):
     ia = IMDb()
     search = ia.search_movie(query)
     movie_id = search[0].getID()
@@ -66,18 +72,17 @@ def imdbInfo(query):
     movie["id"] = movie_id
     return movie
     
-def movieSearch(movie):
+def rottentom_search(movie):
     results = RottenTomatoesClient.search(term=movie['title'], limit=10)
     for result in results['movies']:
-        print(result)
         if result['year'] == movie['year']:
             return result
     else:
-        return "Unavailable"
+        return {}
 
 
 def movie_main(film):
-    movie = imdbInfo(film)
+    movie = imdb_info(film)
 
     info = movieInfo(movie['title'], movie['year'], movie['plot'], movie['genres'],
                         movie['runtime'], movie['directors'], movie['cast'], movie['cover url'])
@@ -85,7 +90,7 @@ def movie_main(film):
     info.credits()
 
     imdb = {"platform": "IMDb", "rating": movie['rating'], "id": movie['id']}
-    rottentom = movieSearch(movie)
+    rottentom = rottentom_search(movie)
     rottentom['platform'] = "Rotten Tomatoes"
     metacritic = movie['metacritic']
     metacritic['platform'] = "Metacritic"
@@ -107,5 +112,8 @@ def movie_embed(movie):
     embed.add_field(name="Credits", value=f"{info.directors}\n{info.cast}", inline=False)
 
     for site in ratings.imdb, ratings.rottentom, ratings.metacritic:
-        embed.add_field(name=site['platform'], value=f"[{site['rating']}%]({site['url']})", inline=True)
+        try:
+            embed.add_field(name=site['platform'], value=f"[{site['rating']}%]({site['url']})", inline=True)
+        except:
+            embed.add_field(name=site['platform'], value="Unavailable", inline=True)
     return embed
