@@ -3,7 +3,7 @@ import random
 import discord
 from discord.ext import commands
 from sys import platform
-from movies import main_movie
+from movies import movie_main, movie_embed
 from wot import main_wot_stats
 from scraper import Scraper
 from functions import chrome_setup
@@ -17,9 +17,9 @@ async def on_ready():
 @client.command(aliases=["movie", "film"])
 async def movieScraper(ctx, *, film):
     try:
-        movie = Scraper(driver, film, f"https://search.yahoo.com/search?p=imdb+{film}")
-        movie_embed = main_movie(movie)
-        await ctx.send(embed=movie_embed)
+        movie = movie_main(film)
+        embed = movie_embed(movie)
+        await ctx.send(embed=embed)
     except:
         await ctx.send("Sorry, we couldn't find the movie")
 
