@@ -31,16 +31,21 @@ class movieInfo:
         self.stream = f"https://azm.to/movie/{self.stream}"
 
     def credits(self):
-        directors = []
-        for director in self.directors:
-            directors.append(director['name'])
-        self.directors = ", ".join(directors)
+        try:
+            directors = []
+            for director in self.directors:
+                directors.append(director['name'])
+            self.directors = ", ".join(directors)
+        except:
+            pass
 
-        cast = []
-        for i in range(3):
-            cast.append(self.cast[i]['name'])
-        self.cast = ", ".join(cast) 
-
+        try:
+            cast = []
+            for i in range(3):
+                cast.append(self.cast[i]['name'])
+            self.cast = ", ".join(cast)
+        except:
+            pass
 
 class movieRatings:
     def __init__(self, imdb, rottentom, metacritic):
@@ -83,12 +88,21 @@ def rottentom_search(movie):
     else:
         return {}
 
+def data_check(movie):
+    data_list = []
+    for data in "title", "year", "plot", "genres", "runtime", "directors", "cast", "cover url":
+        try:
+            data_list.append(movie[data])
+        except:
+            movie[data] = "Unavailable"
+            data_list.append(movie[data])
+    return data_list
 
 def movie_main(film):
     movie = imdb_info(film)
+    data_list = data_check(movie)
 
-    info = movieInfo(movie['title'], movie['year'], movie['plot'], movie['genres'],
-                        movie['runtime'], movie['directors'], movie['cast'], movie['cover url'])
+    info = movieInfo(*data_list)
     info.general()
     info.credits()
 
