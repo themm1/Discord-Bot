@@ -13,6 +13,7 @@ class movieInfo:
         self.directors = directors
         self.cast = cast
         self.img = img
+        self.stream = self.title.replace(" ", "-").lower()
 
     def general(self):
         self.title = f"{self.title} ({self.year})"
@@ -26,6 +27,8 @@ class movieInfo:
         runtime = runtime / 60
         mins = runtime % 10 / 10 * 60
         self.runtime = f"{int(runtime)}h {int(mins)}min"
+
+        self.stream = f"https://azm.to/movie/{self.stream}"
 
     def credits(self):
         directors = []
@@ -103,13 +106,13 @@ def movie_embed(movie):
     info = movie['info']
     ratings = movie['ratings']
     
-    embed = discord.Embed(title=info.title, description=f"{info.plot}\n\nMore information: [IMDb]({ratings.imdb['url']})\
-        \nWatch for free: AZMovies (NOT SECURE)", color=0xFF0000)
-
+    embed = discord.Embed(title=info.title, description=info.plot, color=0xFF0000)
     embed.set_thumbnail(url=info.img)
+
+    embed.add_field(name="Credits", value=f"Directors: {info.directors}\nCast: {info.cast}", inline=False)
     embed.add_field(name="Genre", value=info.genres, inline=True)
     embed.add_field(name="Runtime", value=info.runtime, inline=True)
-    embed.add_field(name="Credits", value=f"{info.directors}\n{info.cast}", inline=False)
+    embed.add_field(name="Watch for free", value=f"[AZMovies]({info.stream}) (NOT SECURE)")
 
     for site in ratings.imdb, ratings.rottentom, ratings.metacritic:
         try:
