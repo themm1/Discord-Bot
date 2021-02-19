@@ -8,7 +8,9 @@ from movies import movie_main, movie_embed
 from wot import main_wot_stats
 from scraper import Scraper
 
+
 client = commands.Bot(command_prefix="!")
+
 
 @client.event
 async def on_ready():
@@ -16,7 +18,7 @@ async def on_ready():
  
 @client.command(aliases=["movie", "film"])
 async def movieScraper(ctx, *, film):
-    movie = movie_main(film)
+    movie = movie_main(film, API_KEY)
     embed = movie_embed(movie)
     await ctx.send(embed=embed)
 
@@ -67,7 +69,7 @@ def chrome_setup(HEROKU):
 
 
 if platform == "win32":
-    from token_discord import TOKEN
+    from secret import TOKEN, API_KEY
     driver = chrome_setup(HEROKU=False)
     client.run(TOKEN)
 else:
