@@ -2,11 +2,11 @@ import os
 import random
 import discord
 from discord.ext import commands
+from selenium import webdriver
 from sys import platform
 from movies import movie_main, movie_embed
 from wot import main_wot_stats
 from scraper import Scraper
-from functions import chrome_setup
 
 client = commands.Bot(command_prefix="!")
 
@@ -42,10 +42,30 @@ async def ping(ctx):
     latency = round(client.latency * 1000)
     await ctx.send(f"Your ping is {latency} ms")
 
-from token_discord import TOKEN
-driver = "f"
-client.run(TOKEN)
-'''
+
+def chrome_linux(options):
+    options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    options.add_argument("--headless")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--no-sandbox")
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=options)
+    return driver
+
+def chrome_win(options):
+    # options.add_argument("headless")
+    driver = webdriver.Chrome(executable_path="C:\Programming Modules\Drivers\chromedriver.exe", options=options)
+    return driver
+
+def chrome_setup(HEROKU):
+    options = webdriver.ChromeOptions()
+    options.add_experimental_option("excludeSwitches", ["enable-logging"])
+    if HEROKU:
+        driver = chrome_linux(options)
+    else:
+        driver = chrome_win(options)
+    return driver
+
+
 if platform == "win32":
     from token_discord import TOKEN
     driver = chrome_setup(HEROKU=False)
@@ -53,4 +73,3 @@ if platform == "win32":
 else:
     driver = chrome_setup(HEROKU=True)
     client.run(os.environ["BOT_TOKEN"])
-'''

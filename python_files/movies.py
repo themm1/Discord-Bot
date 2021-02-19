@@ -90,6 +90,7 @@ def rottentom_search(movie):
 
 def data_check(movie):
     data_list = []
+    print(movie)
     for data in "title", "year", "plot", "genres", "runtime", "directors", "cast", "cover url":
         try:
             data_list.append(movie[data])
@@ -100,9 +101,9 @@ def data_check(movie):
 
 def movie_main(film):
     movie = imdb_info(film)
-    data_list = data_check(movie)
+    data = data_check(movie)
 
-    info = movieInfo(*data_list)
+    info = movieInfo(*data)
     info.general()
     info.credits()
 
