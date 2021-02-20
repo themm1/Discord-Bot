@@ -17,9 +17,12 @@ async def on_ready():
  
 @client.command(aliases=["movie", "film"])
 async def movieScraper(ctx, *, film):
-    movie = movie_main(film, API_KEY)
-    embed = movie_embed(movie)
-    await ctx.send(embed=embed)
+    try:
+        movie = movie_main(film, API_KEY)
+        embed = movie_embed(movie)
+        await ctx.send(embed=embed)
+    except:
+        print("Couldn't find the movie")
     
 @client.command()
 async def wot(ctx, *, player):
@@ -72,6 +75,7 @@ if platform == "win32":
     driver = chrome_setup(HEROKU=False)
 else:
     TOKEN = os.environ["BOT_TOKEN"]
+    API_KEY = os.environ["API_KEY"]
     driver = chrome_setup(HEROKU=True)
 
 client.run(TOKEN)

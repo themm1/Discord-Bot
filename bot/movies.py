@@ -1,11 +1,6 @@
 import requests
 import discord
 from discord.ext import commands
-try:
-    from secret import API_KEY
-except:
-    import os
-    API_KEY = os.environ["API_KEY"]
 
 
 def movie_main(movieTitle, apiKey):
