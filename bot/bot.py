@@ -17,13 +17,10 @@ async def on_ready():
  
 @client.command(aliases=["movie", "film"])
 async def movieScraper(ctx, *, film):
-    try:
-        movie = movie_main(film, API_KEY)
-        embed = movie_embed(movie)
-        await ctx.send(embed=embed)
-    except:
-        await ctx.send("Couldn't find the movie.")
-
+    movie = movie_main(film, API_KEY)
+    embed = movie_embed(movie)
+    await ctx.send(embed=embed)
+    
 @client.command()
 async def wot(ctx, *, player):
     try:
