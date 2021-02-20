@@ -5,8 +5,7 @@ from discord.ext import commands
 from selenium import webdriver
 from sys import platform
 from movies import movie_main, movie_embed
-from wot import main_wot_stats
-from scraper import Scraper
+from wot import main_wot_stats, Scraper
 
 
 client = commands.Bot(command_prefix="!")
@@ -18,9 +17,12 @@ async def on_ready():
  
 @client.command(aliases=["movie", "film"])
 async def movieScraper(ctx, *, film):
-    movie = movie_main(film, API_KEY)
-    embed = movie_embed(movie)
-    await ctx.send(embed=embed)
+    try:
+        movie = movie_main(film, API_KEY)
+        embed = movie_embed(movie)
+        await ctx.send(embed=embed)
+    except:
+        await ctx.send("Couldn't find the movie.")
 
 @client.command()
 async def wot(ctx, *, player):
@@ -71,7 +73,8 @@ def chrome_setup(HEROKU):
 if platform == "win32":
     from secret import TOKEN, API_KEY
     driver = chrome_setup(HEROKU=False)
-    client.run(TOKEN)
 else:
+    TOKEN = os.environ["BOT_TOKEN"]
     driver = chrome_setup(HEROKU=True)
-    client.run(os.environ["BOT_TOKEN"])
+
+client.run(TOKEN)
