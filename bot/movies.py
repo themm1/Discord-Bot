@@ -3,16 +3,17 @@ import discord
 from discord.ext import commands
 
 
-def movie_main(movieTitle, apiKey):
+def imdb_main(title, q_type, apiKey):
     data_URL = f"http://www.omdbapi.com/?apikey={apiKey}"
 
-    s_search = {"s": movieTitle,    "type": "movie"}
+    s_search = {"s": title,    "type": q_type}
     results = requests.get(data_URL, params=s_search).json()
 
     resultID = results['Search'][0]['imdbID']
-    t_search = {"i": resultID,      "type": "movie",    "plot": "full"}
+    t_search = {"i": resultID,      "type": q_type,    "plot": "full"}
     
     return requests.get(data_URL, params=t_search).json()
+
 
 def movie_embed(movie):
     stream = f"https://azm.to/movie/{edit_stream(movie['Title'])}"
@@ -30,6 +31,19 @@ def movie_embed(movie):
     movie['Ratings'][0]['Source'] = "IMDb"
     for site in movie['Ratings']:
         embed.add_field(name=site['Source'], value=f"{edit_number(site['Value'])} %", inline=True)
+
+    return embed
+
+
+def series_embed(serial):
+    embed = discord.Embed(title=f"{serial['Title']} ({serial['Year']})", description=f"{serial['Plot']}\
+        \n\nMore information on [IMDb](https://www.imdb.com/title/{serial['imdbID']})", color=0xFF0000)
+    embed.set_thumbnail(url=serial['Poster'])
+
+    embed.add_field(name="Credits", value=f"Director: {serial['Director']}\nCast: {serial['Actors']}", inline=False)
+    embed.add_field(name="Genre", value=serial['Genre'], inline=True)
+    embed.add_field(name="Runtime", value=serial['Runtime'], inline=True)
+    embed.add_field(name="IMDb", value=f"{edit_number(serial['Ratings'][0]['Value'])} %", inline=True)
 
     return embed
 

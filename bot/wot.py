@@ -23,6 +23,7 @@ def main_wot_stats(wot):
     embed = wot_embed(player)
     return embed
 
+
 def wot_embed(player):
     p = player
     embed = discord.Embed(title=f"{p.name} ({p.clan})", description=f"More stats: \

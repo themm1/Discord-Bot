@@ -4,7 +4,7 @@ import discord
 from discord.ext import commands
 from selenium import webdriver
 from sys import platform
-from movies import movie_main, movie_embed
+from movies import imdb_main, movie_embed, series_embed
 from wot import main_wot_stats, Scraper
 
 
@@ -16,13 +16,22 @@ async def on_ready():
     print("Bot is ready.")
  
 @client.command(aliases=["movie", "film"])
-async def movieScraper(ctx, *, film):
+async def movies(ctx, *, film):
     try:
-        movie = movie_main(film, API_KEY)
+        movie = imdb_main(film, "movie", API_KEY)
         embed = movie_embed(movie)
         await ctx.send(embed=embed)
     except:
-        print("Couldn't find the movie")
+        await ctx.send("Couldn't find the movie")
+
+@client.command(aliases=["serial", "series"])
+async def serials(ctx, *, series):
+    try:
+        serial = imdb_main(series, "series", API_KEY)
+        embed = series_embed(serial)
+        await ctx.send(embed=embed)
+    except:
+        await ctx.send("Couldn't find the series")
     
 @client.command()
 async def wot(ctx, *, player):
