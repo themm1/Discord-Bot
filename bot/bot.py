@@ -71,8 +71,6 @@ async def help(ctx):
 
 
 def chrome_linux(options):
-    display = Display(visible=0, size=(800, 800))  
-    display.start()
     options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     options.add_argument("--headless")
     options.add_argument("--disable-dev-shm-usage")
