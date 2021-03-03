@@ -8,11 +8,12 @@ from movies import imdb_main, movie_embed, series_embed
 from wot import main_wot_stats, Scraper
 
 
-client = commands.Bot(command_prefix="!")
+client = commands.Bot(command_prefix="!", help_command=None)
 
 
 @client.event
 async def on_ready():
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="!help for commands"))
     print("Bot is ready.")
  
 @client.command(aliases=["movie", "film"])
@@ -46,7 +47,7 @@ async def wot(ctx, *, player):
 async def random_number(ctx, max_nubmer):
     try:
         rn = random.randint(1, int(max_nubmer))
-        await ctx.send(f"Random number: {rn}")
+        await ctx.send(f"Random number: **{rn}**")
     except:
         await ctx.send("Couldn't generate random number. Example: !rn 10")
 
@@ -55,13 +56,13 @@ async def ping(ctx):
     latency = round(client.latency * 1000)
     await ctx.send(f"Your ping is {latency} ms")
 
-@client.command()
-async def commands(ctx):
+@client.command(aliases=["commands"])
+async def help(ctx):
     embed = discord.Embed(title="Commands", description="\
         Code on [GitHub](https://github.com/themm1/Discord-Bot)", color=0x31FF00)
     embed.add_field(name="Command", value="\
-        \n__*!ping*__\n\n__*!rn [nubmer]*__\n\n__*!wot [player]*__\n\n\
-        __*!movie [movie]*__\n\n__*!series [series]*__", inline=True)
+        \n__**!ping**__\n\n__**!rn [nubmer]**__\n\n__**!wot [player]**__\n\n\
+        __**!movie [movie]**__\n\n__**!series [series]**__", inline=True)
     embed.add_field(name="Message", value="\
         \nyour ping to the discord server\n\ngenerates random number in range 1 - [the number]\n\n\
         WoT player's stats\n\ninforamtion about the movie\n\ninforamtion about the series", inline=True)
