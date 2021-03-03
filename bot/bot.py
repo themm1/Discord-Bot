@@ -4,7 +4,6 @@ import discord
 from discord.ext import commands
 from selenium import webdriver
 from sys import platform
-from pyvirtualdisplay import Display
 from movies import imdb_main, movie_embed, series_embed
 from wot import main_wot_stats, Scraper
 
@@ -78,6 +77,8 @@ def chrome_linux(options):
     options.add_argument("--headless")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--no-sandbox")
+    options.add_argument("--window-size=1420,1080")
+    options.add_argument("--disable-gpu")
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=options)
     return driver
 
