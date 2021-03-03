@@ -27,7 +27,7 @@ def main_wot_stats(wot):
 def wot_embed(player):
     p = player
     embed = discord.Embed(title=f"{p.name} ({p.clan})", description=f"More stats: \
-    [WotCharts]({p.wotcharts}), [WotLife]({p.wotlife})", color=0xFF0000)
+    [WotCharts]({p.wotcharts}), [WotLife]({p.wotlife})", color=0x00F4FF)
     embed.add_field(name="Battles", value=p.battles[0], inline=True)
     embed.add_field(name="Winrate", value=p.winrate[0], inline=True)
     embed.add_field(name="WN8", value=p.wn8[0], inline=True)
