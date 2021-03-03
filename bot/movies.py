@@ -16,11 +16,11 @@ def imdb_main(title, q_type, apiKey):
 
 
 def movie_embed(movie):
-    stream = f"https://azm.to/movie/{edit_stream(movie['Title'])}"
+    stream = f"https://moviesjoy.to/search/{edit_stream(movie['Title'])}"
     
     embed = discord.Embed(title=f"{movie['Title']} ({movie['Year']})", description=f"{movie['Plot']}\
         \n\nMore information on [IMDb](https://www.imdb.com/title/{movie['imdbID']})\
-        \nWhatch for free on [AZMovies]({stream}) (NOT SECURE)", color=0xFF0000)
+        \nWhatch for free on [MoviesJoy]({stream}) (NOT SECURE)", color=0xFF0000)
     embed.set_thumbnail(url=movie['Poster'])
 
     embed.add_field(name="Credits", value=f"Director: {movie['Director']}\nCast: {movie['Actors']}", inline=False)
