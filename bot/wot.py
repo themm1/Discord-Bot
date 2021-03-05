@@ -1,36 +1,34 @@
 import discord
 from discord.ext import commands
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from requests_html import HTMLSession
 
 
-def main_wot_stats(wot):
+def getWotStats(player):
+    session = HTMLSession()
+    site = session.get(f"https://sk.wot-life.com/eu/player/{player}")
+
+    name = site.html.find("#title > div > div > h1")[0].text
     try:
-        wot.click_element(By.XPATH, "//*[@id='consentDialog']/div[2]/div[2]/div/div[2]/div/div[1]/div")
-        clan = wot.get_element("//*[@id='title']/div/div[2]/div/div/div[1]")
+        clan = site.html.find(".col-xs-12.col-sm-dyn.col-sm-pull-right > .clan > .clan-info > .clan-tag > a")[0].text
     except:
-        clan = "Without clan"
-    battles = []; winrate = []; wn8 = []
-    name = wot.get_element("//*[@id='title']/div/div/h1")
-    for i in range(2, 9, 2):
-        winrate.append(wot.get_element(f"//*[@id='tab1']/table[1]/tbody/tr[4]/td[{i}]"))
-    for i in range(1, 5):
-        battles.append(wot.get_element(f"//*[@id='tab1']/table[1]/tbody/tr[2]/td[{i}]"))
-        wn8.append(wot.get_element(f"//*[@id='tab1']/table[1]/tbody/tr[16]/td[{i}]"))
-    player = WotPlayer(name, clan, battles, winrate, wn8)
-    embed = wot_embed(player)
-    return embed
+        clan = ""
 
+    battles = []; winrate = []; wn8 = [];
+    for i in range(4):
+        battles.append(site.html.find(f"tbody > tr:nth-child(1) > td.text-right")[i].text)
+        winrate.append(site.html.find(f"tbody > tr:nth-child(3) > td:nth-child(3)")[i].text)
+        wn8.append(site.html.find(f"tbody > tr:nth-child(15) > .text-right.wn")[i].text)
+            
+    return WotPlayer(name, clan, battles, winrate, wn8)
 
-def wot_embed(player):
+def wotEmbed(player):
     p = player
-    embed = discord.Embed(title=f"{p.name} ({p.clan})", description=f"More stats: \
+    embed = discord.Embed(title=f"{p.name} {p.clan}", description=f"More stats: \
     [WotCharts]({p.wotcharts}), [WotLife]({p.wotlife})", color=0x00F4FF)
     embed.add_field(name="Battles", value=p.battles[0], inline=True)
     embed.add_field(name="Winrate", value=p.winrate[0], inline=True)
     embed.add_field(name="WN8", value=p.wn8[0], inline=True)
+
     i = 0
     for session in "Last 24 hours", "Last 7 days", "Last 30 days":
         i += 1
@@ -45,31 +43,5 @@ class WotPlayer:
         self.battles = battles
         self.winrate = winrate
         self.wn8 = wn8
-        self.wotlife = f"https://sk.wot-life.com/eu/player/{self.name}/"
-        self.wotcharts = f"https://wotcharts.eu/Player?name={self.name}"
-
-class Scraper: 
-    def __init__(self, driver, user_input, site):
-        self.driver = driver
-        self.user_input = user_input
-        driver.get(site)
-
-    def click_element(self, by_x, html_element):
-        try:
-            element = self.driver(self.driver, 1).until(
-                EC.presence_of_element_located((by_x, html_element))
-            )
-        except:
-            return False
-
-    def get_element(self, html_element):
-        return self.driver.find_element_by_xpath(html_element).text
-
-    def get_current_url(self):
-        return self.driver.current_url
-
-    def close(self):
-        self.driver.close()
-
-    def quit(self):
-        self.driver.quit()
+        self.wotlife = f"https://sk.wot-life.com/eu/player/{name}"
+        self.wotcharts = f"https://wotcharts.eu/Player?name={name}"

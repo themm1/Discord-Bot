@@ -2,10 +2,9 @@ import os
 import random
 import discord
 from discord.ext import commands
-from selenium import webdriver
 from sys import platform
 from movies import imdb_main, movie_embed, series_embed
-from wot import main_wot_stats, Scraper
+from wot import getWotStats, wotEmbed
 
 
 client = commands.Bot(command_prefix="!", help_command=None)
@@ -35,13 +34,10 @@ async def serials(ctx, *, series):
         await ctx.send("Couldn't find the series")
     
 @client.command()
-async def wot(ctx, *, player):
-    try:
-        wot = Scraper(driver, player, f"https://sk.wot-life.com/eu/player/{player}/")
-        wot_embed = main_wot_stats(wot)
-        await ctx.send(embed=wot_embed)
-    except:
-        await ctx.send("Couldn't find the player")
+async def wot(ctx, *, player_name):
+    player = getWotStats(player_name)
+    wot_embed = wotEmbed(player)
+    await ctx.send(embed=wot_embed)
     
 @client.command(aliases=["rn", "randomnumber"])
 async def random_number(ctx, max_nubmer):
