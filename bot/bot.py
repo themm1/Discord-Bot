@@ -2,7 +2,6 @@ import os
 import random
 import discord
 from discord.ext import commands
-from sys import platform
 from movies import imdb_main, movie_embed, series_embed
 from wot import getWotStats, wotEmbed
 
@@ -66,36 +65,10 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 
-def chrome_linux(options):
-    options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-    options.add_argument("--headless")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--window-size=1420,1080")
-    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=options)
-    return driver
-
-def chrome_win(options):
-    # options.add_argument("headless")
-    driver = webdriver.Chrome(executable_path="C:\Programming Modules\Drivers\chromedriver.exe", options=options)
-    return driver
-
-def chrome_setup(HEROKU):
-    options = webdriver.ChromeOptions()
-    options.add_experimental_option("excludeSwitches", ["enable-logging"])
-    if HEROKU:
-        driver = chrome_linux(options)
-    else:
-        driver = chrome_win(options)
-    return driver
-
-
-if platform == "win32":
+try:
     from secret import TOKEN, API_KEY
-    driver = chrome_setup(HEROKU=False)
-else:
+except:
     TOKEN = os.environ["BOT_TOKEN"]
     API_KEY = os.environ["API_KEY"]
-    driver = chrome_setup(HEROKU=True)
 
 client.run(TOKEN)
