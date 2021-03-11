@@ -56,8 +56,8 @@ async def help(ctx):
     embed = discord.Embed(title="Commands", description="\
         Code on [GitHub](https://github.com/themm1/Discord-Bot)", color=0x31FF00)
     embed.add_field(name="Command", value="\
-        \n__**!ping**__\n\n__**!rn [nubmer]**__\n\n__**!wot [player]**__\n\n\
-        __**!movie [movie]**__\n\n__**!series [series]**__", inline=True)
+        \n**!ping**\n\n**!rn [nubmer]**\n\n**!wot [player]**\n\n\
+        **!movie [movie]**\n\n**!series [series]**", inline=True)
     embed.add_field(name="Message", value="\
         \nyour ping to the discord server\n\ngenerates random number in range 1 - [the number]\n\n\
         WoT player's stats\n\ninforamtion about the movie\n\ninforamtion about the series", inline=True)
