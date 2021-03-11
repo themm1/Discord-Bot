@@ -8,8 +8,9 @@ This discord bot is usefull for web scraping some information from the internet,
 ## Commands
 | Command               | Message                                            |
 | :---------------------|:---------------------------------------------------|
-| !ping                 | returns your ping to the discord server            |
+| !help                 | list of commands, github link                      |
+| !ping                 | your ping to the discord server                    |
 | !rn [number]          | generates random number in range 1 - [the number]  |
-| !wot [player]         | returns WoT player's stats                         |
-| !movie [the movie]    | returns some inforamtion about the movie           |
-| !serial [the series]  | returns some inforamtion about the series          |
+| !wot [player]         | WoT player's stats                                 |
+| !movie [the movie]    | some inforamtion about the movie                   |
+| !serial [the series]  | some inforamtion about the series                  |
