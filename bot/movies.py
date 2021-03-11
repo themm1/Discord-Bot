@@ -1,4 +1,5 @@
 import requests
+import math
 import discord
 from discord.ext import commands
 
@@ -59,9 +60,10 @@ def edit_number(ratings):
 
 def edit_runtime(runtime):
     runtime = edit_number(runtime)
-    runtime = runtime / 60
-    mins = runtime % 10 / 10 * 60
-    return f"{int(runtime)}h {int(mins)}min"
+    hours = runtime / 60
+    fractional, whole = math.modf(hours)
+    mins = fractional * 60
+    return f"{int(hours)}h {round(mins)}min"
 
 def edit_stream(title):
     return title.replace(" ", "-").lower()
