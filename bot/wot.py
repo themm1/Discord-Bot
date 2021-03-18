@@ -10,7 +10,7 @@ def getWotStats(player):
     name = site.html.find("#title > div > div > h1")[0].text
     try:
         clan = site.html.find(".col-xs-12.col-sm-dyn.col-sm-pull-right > .clan > .clan-info > .clan-tag > a")[0].text
-    except:
+    except Exception:
         clan = ""
 
     battles = []; winrate = []; wn8 = [];

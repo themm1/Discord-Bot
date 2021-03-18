@@ -2,8 +2,8 @@ import os
 import random
 import discord
 from discord.ext import commands
-from movies import imdb_main, movie_embed, series_embed
 from wot import getWotStats, wotEmbed
+from movies import imdb_main, movie_embed, series_embed
 
 
 client = commands.Bot(command_prefix="!", help_command=None)
@@ -20,7 +20,7 @@ async def movies(ctx, *, film):
         movie = imdb_main(film, "movie", API_KEY)
         embed = movie_embed(movie)
         await ctx.send(embed=embed)
-    except:
+    except Exception:
         await ctx.send("Couldn't find the movie")
 
 @client.command(aliases=["serial", "series"])
@@ -29,7 +29,7 @@ async def serials(ctx, *, series):
         serial = imdb_main(series, "series", API_KEY)
         embed = series_embed(serial)
         await ctx.send(embed=embed)
-    except:
+    except Exception:
         await ctx.send("Couldn't find the series")
     
 @client.command()
@@ -43,7 +43,7 @@ async def random_number(ctx, max_nubmer):
     try:
         rn = random.randint(1, int(max_nubmer))
         await ctx.send(f"Random number: **{rn}**")
-    except:
+    except Exception:
         await ctx.send("Couldn't generate random number. Example: !rn 10")
 
 @client.command()
@@ -67,7 +67,7 @@ async def help(ctx):
 
 try:
     from secret import TOKEN, API_KEY
-except:
+except Exception:
     TOKEN = os.environ["BOT_TOKEN"]
     API_KEY = os.environ["API_KEY"]
 

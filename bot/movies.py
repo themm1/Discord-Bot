@@ -1,17 +1,24 @@
-import requests
 import math
 import discord
+import requests
 from discord.ext import commands
 
 
-def imdb_main(title, q_type, apiKey):
-    data_URL = f"http://www.omdbapi.com/?apikey={apiKey}"
+def imdb_main(title, q_type, API_KEY):
+    data_URL = f"http://www.omdbapi.com/?apikey={API_KEY}"
 
-    s_search = {"s": title,    "type": q_type}
+    s_search = {
+        "s": title,
+        "type": q_type
+    }
     results = requests.get(data_URL, params=s_search).json()
 
     resultID = results['Search'][0]['imdbID']
-    t_search = {"i": resultID,      "type": q_type,    "plot": "full"}
+    t_search = {
+        "i": resultID,
+        "type": q_type,
+        "plot": "full"
+    }
     
     return requests.get(data_URL, params=t_search).json()
 
