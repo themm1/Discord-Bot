@@ -64,6 +64,11 @@ async def help(ctx):
     
     await ctx.send(embed=embed)
 
+@client.command()
+async def calc(ctx, expression):
+    result = eval(expression)
+    await ctx.send(f"= {result}")
+
 
 try:
     from secret import TOKEN, API_KEY
