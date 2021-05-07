@@ -44,7 +44,8 @@ async def random_number(ctx, max_nubmer):
         rn = random.randint(1, int(max_nubmer))
         await ctx.send(f"Random number: **{rn}**")
     except Exception:
-        await ctx.send("Couldn't generate random number. Example: !rn 10")
+        await ctx.send("Couldn't generate random number.\n"\
+            "Example: **!rn 10**")
 
 @client.command()
 async def ping(ctx):
@@ -55,22 +56,22 @@ async def ping(ctx):
 async def help(ctx):
     embed = discord.Embed(title="Commands", description="\
         Code on [GitHub](https://github.com/themm1/Discord-Bot)", color=0x31ff00)
-    embed.add_field(name="Command", value="\n\
-        **!ping**\n\n\
-        **!rn [nubmer]**\n\n\
-        **!calc [math expression]**\n\n\
-        **!rgb [color code]**\n\n\n\
-        **!wot [player]**\n\n\
-        **!movie [movie]**\n\n\
-        **!series [series]**", inline=True)
-    embed.add_field(name="Message", value="\n\
-        your ping to the discord server\n\n\
-        generates random number in range 1 - [the number]\n\n\
-        result of the expression (do NOT use spaces)\n\n\
-        hexadecimal color if rgb [255,255,255], rgb if hexadecimal [0xffffff]\n\n\
-        WoT player's stats\n\n\
-        inforamtion about the movie\n\n\
-        inforamtion about the series", inline=True)
+    embed.add_field(name="Command", value="""\n
+        **!ping**\n
+        **!rn [nubmer]**\n
+        **!calc [math expression]**\n
+        **!rgb [color code]**\n\n
+        **!wot [player]**\n
+        **!movie [movie]**\n
+        **!series [series]**""", inline=True)
+    embed.add_field(name="Message", value="""\n
+        your ping to the discord server\n
+        generates random number in range 1 - [the number]\n
+        result of the expression (do NOT use spaces)\n
+        hexadecimal color if rgb [255,255,255], rgb if hexadecimal [0xffffff]\n
+        WoT player's stats\n
+        inforamtion about the movie\n
+        inforamtion about the series""", inline=True)
     
     await ctx.send(embed=embed)
 
@@ -81,6 +82,8 @@ async def calc(ctx, expression):
 
 @client.command()
 async def rgb(ctx, string):
+    ERROR_MESSAGE = "Invalid color code, please try another.\n"\
+        "Example: **!rgb 255,255,255** or **!rgb 0xffffff**"
     def hexa(rgb_string):
         rgb_color = rgb_string.split(",")
         hex_color = ["00", "00", "00"]
@@ -102,12 +105,20 @@ async def rgb(ctx, string):
             hex_list.pop(0)
         hex_color = [f"{hex_list[i]}{hex_list[i+1]}" for i in range(0, len(hex_list), 2)]
         rgb_color =  [str(int(code, 16)) for code in hex_color]
-        return ",".join(rgb_color)
+        if len(rgb_color) == 3:
+            return ",".join(rgb_color)
+        return ERROR_MESSAGE
 
     if "," in string:
-        await ctx.send(hexa(string))
+        try:
+            await ctx.send(hexa(string))
+        except Exception:
+            await ctx.send(ERROR_MESSAGE)
     else:
-        await ctx.send(rgb(string))
+        try:
+            await ctx.send(rgb(string))
+        except Exception:
+            await ctx.send(ERROR_MESSAGE)
 
 
 try:
