@@ -28,7 +28,7 @@ def movie_embed(movie):
     
     embed = discord.Embed(title=f"{movie['Title']} ({movie['Year']})", description=f"{movie['Plot']}\
         \n\nMore information on [IMDb](https://www.imdb.com/title/{movie['imdbID']})\
-        \nWhatch for free on [MoviesJoy]({stream}) (NOT SECURE)", color=0xFF0000)
+        \nWatch for free on [MoviesJoy]({stream}) (NOT SECURE)", color=0xFF0000)
     embed.set_thumbnail(url=movie['Poster'])
 
     embed.add_field(name="Credits", value=f"Director: {movie['Director']}\nCast: {movie['Actors']}", inline=False)
