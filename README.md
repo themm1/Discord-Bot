@@ -14,5 +14,6 @@ This discord bot is usefull for web scraping some information from the internet,
 | !calc [math expression] | result of the expression (do NOT use spaces)                           |
 | !rgb [color code]       | hexadecimal color if rgb [255,255,255], rgb if hexadecimal [0xffffff]  |
 | !wot [player]           | WoT player's stats                                                     |
+| !faceit [player]        | player's Faceit stats (only CS:GO)                                     |
 | !movie [the movie]      | some inforamtion about the movie                                       |
 | !serial [the series]    | some inforamtion about the series                                      |

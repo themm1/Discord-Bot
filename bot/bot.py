@@ -16,7 +16,7 @@ async def on_ready():
     print("Bot is ready.")
 
 @client.command(aliases=["movie", "film"])
-async def movies(ctx, *, film): 
+async def movies(ctx, *, film):
     try:
         movie = imdb_main(film, "movie", KEYS['omdb'])
         embed = movie_embed(movie)
@@ -75,6 +75,7 @@ async def help(ctx):
         **!calc [math expression]**\n
         **!rgb [color code]**\n\n
         **!wot [player]**\n
+        **!faceit [player]**\n
         **!movie [movie]**\n
         **!series [series]**""", inline=True)
     embed.add_field(name="Message", value="""\n
@@ -83,6 +84,7 @@ async def help(ctx):
         result of the expression (do NOT use spaces)\n
         hexadecimal color if rgb [255,255,255], rgb if hexadecimal [0xffffff]\n
         WoT player's stats\n
+        player's Faceit stats (only CS:GO)\n
         inforamtion about the movie\n
         inforamtion about the series""", inline=True)
 
@@ -138,8 +140,8 @@ try:
     from secret import KEYS
 except Exception:
     KEYS = {
-        "discord": os.environ['BOT_TOKEN'],
-        "omdb": os.environ['API_KEY'],
+        "discord": os.environ['BOT_KEY'],
+        "omdb": os.environ['OMDB_KEY'],
         "faceit": os.environ['FACEIT_KEY']
     }
 
