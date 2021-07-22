@@ -1,18 +1,19 @@
 import os
 import random
 import discord
+import asyncio
 from discord.ext import commands
 from wot import getWotStats, wotEmbed
 from faceit import faceit_embed, FaceitStats
+from twitch import stream_notifications, get_headers
 from movies import imdb_main, movie_embed, series_embed
 
-
 client = commands.Bot(command_prefix="!", help_command=None)
-
 
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="!help for commands"))
+    client.loop.create_task(stream_notifications(client, get_headers(KEYS['twitch'])))
     print("Bot is ready.")
 
 @client.command(aliases=["movie", "film"])
@@ -142,7 +143,11 @@ except Exception:
     KEYS = {
         "discord": os.environ['BOT_KEY'],
         "omdb": os.environ['OMDB_KEY'],
-        "faceit": os.environ['FACEIT_KEY']
+        "faceit": os.environ['FACEIT_KEY'],
+        "twitch": {
+            "client_id": os.environ['TWITCH_ID'],
+            "client_secret": os.environ['TWITCH_SECRET']
+        }
     }
-
-client.run(KEYS['discord'])
+if __name__ == "__main__":
+    client.run(KEYS['discord'])
