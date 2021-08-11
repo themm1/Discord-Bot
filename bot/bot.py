@@ -4,6 +4,7 @@ import discord
 import asyncio
 from discord.ext import commands
 from wot import getWotStats, wotEmbed
+from py_expression_eval import Parser
 from faceit import faceit_embed, FaceitStats
 from twitch import stream_notifications, get_headers
 from movies import imdb_main, movie_embed, series_embed
@@ -93,8 +94,20 @@ async def help(ctx):
 
 @client.command(aliases=["math", "result"])
 async def calc(ctx, expression):
-    result = eval(expression)
-    await ctx.send(f"= {result}")
+    expression = expression.split(";")
+    variables = {}
+
+    if len(expression) > 1:
+        for var in expression[1:]:
+            equal_index = var.rfind("=")
+            key = var[:equal_index]
+            value = var[equal_index+1:]
+            value = float(value)
+            variables[key] = value
+
+    parser = Parser()
+    result = parser.parse(expression[0]).evaluate(variables)
+    await ctx.send(result)
 
 @client.command()
 async def rgb(ctx, string):
