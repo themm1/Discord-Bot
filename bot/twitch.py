@@ -1,10 +1,9 @@
 import json
 import asyncio
 import requests
-from pprint import pprint
 
 async def stream_notifications(client, API_HEADERS):
-    with open("notifications.json") as f:
+    with open("bot/notifications.json") as f:
         ids = json.load(f)
 
     live = {}
