@@ -1,6 +1,7 @@
 import json
 import asyncio
 import requests
+from pprint import pprint
 
 async def stream_notifications(client, API_HEADERS):
     with open("bot/notifications.json") as f:
@@ -26,6 +27,11 @@ async def stream_notifications(client, API_HEADERS):
             elif stream == False and live[streamer_id] == True:
                 live[streamer_id] = False
             await asyncio.sleep(10)
+
+def get_user_id(username, API_HEADERS):
+    url = f"https://api.twitch.tv/helix/users?login={username}"
+    user = requests.get(url, headers=API_HEADERS).json()
+    pprint(user)
 
 
 def get_headers(twitch_keys):
