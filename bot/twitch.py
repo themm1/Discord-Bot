@@ -4,9 +4,6 @@ import requests
 from pprint import pprint
 
 async def stream_notifications(client, API_HEADERS):
-    """
-    This function asynchronously gets stream notifictations
-    """
     with open("bot/notifications.json") as f:
         ids = json.load(f)
 
@@ -32,18 +29,12 @@ async def stream_notifications(client, API_HEADERS):
             await asyncio.sleep(10)
 
 def get_user_id(username, API_HEADERS):
-    """
-    This function gets the user ID
-    """
     url = f"https://api.twitch.tv/helix/users?login={username}"
     user = requests.get(url, headers=API_HEADERS).json()
     pprint(user)
 
 
 def get_headers(twitch_keys):
-    """
-    This function gets the header
-    """
     body = {
         "client_id": twitch_keys['client_id'],
         "client_secret": twitch_keys['client_secret'],
@@ -59,9 +50,6 @@ def get_headers(twitch_keys):
     return API_HEADERS
 
 def check_stream(user_id, API_HEADERS):
-    """
-    This function checks the stream
-    """
     url = f"https://api.twitch.tv/helix/streams?user_id={user_id}"
     stream = False
 
@@ -72,5 +60,5 @@ def check_stream(user_id, API_HEADERS):
             url = f"https://www.twitch.tv/{stream['user_login']}"
             stream['url'] = url
     except Exception as e:
-        print(f"Error checking user: {e}") #Raised if any exception occurs, so the app doesnt crash completely on failure!
+        print(f"Error checking user: {e}")
     return stream
