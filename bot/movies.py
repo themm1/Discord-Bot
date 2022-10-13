@@ -57,13 +57,13 @@ def series_embed(serial):
 
 
 def edit_number(ratings):
-    value = []
+    values = []
     for rating in ratings:
         if rating == "/":
             break
         elif rating.isnumeric():
-            value.append(rating)
-    return int("".join(value))
+            values.append(rating)
+    return int("".join(values))
 
 def edit_runtime(runtime):
     runtime = edit_number(runtime)
