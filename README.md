@@ -1,9 +1,11 @@
 # Discord-Bot
 
 ## About my discord bot
-This discord bot is usefull for web scraping some information from the internet, such as movies, series and World of Tanks players.
+This discord bot is usefull for web scraping some information from the internet, such as movies, series and World of Tanks players. It can also be used to (safely) evaluate expressions, give random numbers, and do some color stuff.
 
-[Invitation](https://discord.com/api/oauth2/authorize?client_id=794536380670935060&permissions=0&scope=bot)
+[Invitation](https://discord.com/api/oauth2/authorize?client_id=794536380670935060&permissions=0&scope=bot)*
+
+*this is an invite with no permission, please keep in mind you might have to update them manually!
 
 ## Commands
 | Command                 | Message                                                                |
